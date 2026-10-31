@@ -1,0 +1,8 @@
+Flask
+Flask-SQLAlchemy
+Flask-Login
+Werkzeug
+groq
+requests
+python-dotenv
+gunicorn
