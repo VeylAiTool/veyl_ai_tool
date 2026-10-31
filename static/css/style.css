@@ -1,0 +1,5 @@
+
+.code-block pre {
+    overflow-x: auto !important;
+    white-space: pre !important;
+}
