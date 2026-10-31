@@ -29,6 +29,17 @@
 </head>
 <body>
     <div class="app-container">
+        <!-- عرض رسائل الخطأ والنجاح -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div style="background: {% if category == 'error' %}#f44336{% else %}#4caf50{% endif %}; color: white; padding: 10px; text-align: center; font-size: 14px; position: absolute; top: 0; left: 0; right: 0; z-index: 999;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
         {% block content %}{% endblock %}
     </div>
 </body>
