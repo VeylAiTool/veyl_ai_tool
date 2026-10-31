@@ -5,42 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Veyl - AI Tool</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            background: #0d0d0d; 
-            color: #ffffff; 
-            font-family: 'Inter', Tahoma, Arial, sans-serif; 
-            height: 100vh;
-            height: 100dvh;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-        }
-        .app-container {
-            width: 100%;
-            max-width: 500px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
+        body { background: #0d0d0d; color: #ffffff; font-family: 'Inter', Tahoma, Arial, sans-serif; height: 100vh; height: 100dvh; overflow: hidden; display: flex; justify-content: center; }
+        .app-container { width: 100%; max-width: 500px; height: 100%; display: flex; flex-direction: column; position: relative; }
     </style>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <div class="app-container">
-        <!-- عرض رسائل الخطأ والنجاح -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div style="background: {% if category == 'error' %}#f44336{% else %}#4caf50{% endif %}; color: white; padding: 10px; text-align: center; font-size: 14px; position: absolute; top: 0; left: 0; right: 0; z-index: 999;">
-                        {{ message }}
-                    </div>
+                    <div style="background: {% if category == 'error' %}#f44336{% else %}#4caf50{% endif %}; color: white; padding: 10px; text-align: center; font-size: 14px; position: absolute; top: 0; left: 0; right: 0; z-index: 999;">{{ message }}</div>
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        
         {% block content %}{% endblock %}
     </div>
 </body>
