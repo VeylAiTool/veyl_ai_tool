@@ -13,12 +13,12 @@
             </svg>
             <div style="font-size: 18px; font-weight: 900; color: #ffffff; letter-spacing: 1px;">VEYL</div>
         </div>
-        <div style="width: 35px; height: 35px; border-radius: 50%; border: 1px solid #ff8c00; display: flex; align-items: center; justify-content: center; color: #ff8c00; font-size: 16px; cursor: pointer;">👤</div>
+        <a href="{{ url_for('auth.logout') }}" style="width: 35px; height: 35px; border-radius: 50%; border: 1px solid #ff8c00; display: flex; align-items: center; justify-content: center; color: #ff8c00; font-size: 16px; cursor: pointer; text-decoration: none;">👤</a>
     </div>
 
     <!-- منطقة الدردشة -->
     <div id="chat-box" style="flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px;">
-        <div style="text-align: center; color: #a0a0a0; margin-top: 20px;">
+        <div id="welcome-msg" style="text-align: center; color: #a0a0a0; margin-top: 20px;">
             <h2 style="color: #ff8c00; margin-bottom: 10px; font-size: 20px;">Welcome to Veyl</h2>
             <p style="font-size: 14px; line-height: 1.6;">I am here to help you with anything.<br>Type a message below to start.</p>
         </div>
@@ -43,6 +43,7 @@
     const sendBtn = document.getElementById('send-btn');
     const input = document.getElementById('message-input');
     const chatBox = document.getElementById('chat-box');
+    let currentConvId = null; // معرف المحادثة الحالية
 
     function addMessage(text, sender) {
         const msgDiv = document.createElement('div');
@@ -56,16 +57,47 @@
         const text = input.value.trim();
         if (!text) return;
         
-        const welcome = chatBox.querySelector('div[style*="text-align: center"]');
-        if (welcome) welcome.remove();
+        const welcome = document.getElementById('welcome-msg');
+        if (welcome) welcome.style.display = 'none';
 
         addMessage(text, 'user');
         input.value = '';
 
-        // ملاحظة: هنا سنضيف الاتصال بـ Flask لاحقاً. حالياً هو مجرد رد تجريبي.
-        setTimeout(() => {
-            addMessage("This is a demo response. Soon I will be connected to Groq AI!", 'bot');
-        }, 1000);
+        // إظهار مؤشر الكتابة (اختياري)
+        const typingDiv = document.createElement('div');
+        typingDiv.id = 'typing';
+        typingDiv.style.cssText = 'align-self: flex-start; color: #ff8c00; font-size: 12px; padding: 5px;';
+        typingDiv.textContent = 'Veyl is typing...';
+        chatBox.appendChild(typingDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        try {
+            // إذا لم تكن هناك محادثة، قم بإنشاء واحدة جديدة
+            if (!currentConvId) {
+                const newChatRes = await fetch('/api/new_chat', { method: 'POST' });
+                const newChatData = await newChatRes.json();
+                currentConvId = newChatData.id;
+            }
+
+            // إرسال الرسالة إلى الخادم
+            const res = await fetch(`/api/chat/${currentConvId}`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({message: text})
+            });
+            const data = await res.json();
+            
+            // إزالة مؤشر الكتابة وإضافة الرد
+            const typingEl = document.getElementById('typing');
+            if (typingEl) typingEl.remove();
+            
+            addMessage(data.reply, 'bot');
+
+        } catch (error) {
+            const typingEl = document.getElementById('typing');
+            if (typingEl) typingEl.remove();
+            addMessage("Error connecting to AI.", 'bot');
+        }
     }
 
     sendBtn.addEventListener('click', sendMessage);
