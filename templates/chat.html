@@ -68,6 +68,7 @@
     .code-block pre {
         margin: 0; padding: 12px; overflow-x: auto; color: #e0e0e0;
         font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.5;
+        white-space: pre !important;
     }
     .code-block code { font-family: 'Courier New', monospace; }
 </style>
@@ -93,7 +94,7 @@
             if (match.index > lastIndex) {
                 result += escaped.slice(lastIndex, match.index).replace(/\n/g, '<br>');
             }
-            const lang = match[1] || 'code';
+            const lang = match[1] || 'plaintext';
             const code = match[2].trim();
             const codeId = 'code_' + Math.random().toString(36).substr(2, 9);
             const previewBtn = ['html'].includes(lang.toLowerCase())
@@ -107,7 +108,7 @@
                         ${previewBtn}
                     </div>
                 </div>
-                <pre><code id="${codeId}">${code}</code></pre>
+                <pre><code id="${codeId}" class="language-${lang.toLowerCase()}">${code}</code></pre>
             </div>`;
             lastIndex = match.index + match[0].length;
         }
@@ -158,6 +159,12 @@
         div.className = 'msg-bot';
         div.innerHTML = renderMarkdown(text);
         chatBox.appendChild(div);
+        
+        // تفعيل تلوين الأكواد (Highlight.js)
+        div.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightElement(block);
+        });
+        
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 
