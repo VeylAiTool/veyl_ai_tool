@@ -1,7 +1,76 @@
 {% extends "base.html" %}
 {% block content %}
-<div style="display:flex; justify-content:center; align-items:center; height:100vh; flex-direction:column;">
-    <h1 style="color:#ff8c00;">Veyl Chat</h1>
-    <p style="color:#aaa;">Chat interface placeholder.</p>
+<div style="display: flex; flex-direction: column; height: 100%; background: #0d0d0d;">
+    
+    <!-- الشريط العلوي -->
+    <div style="height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; border-bottom: 1px solid rgba(255, 140, 0, 0.2); background: rgba(13, 13, 13, 0.95); z-index: 10;">
+        <div style="font-size: 24px; color: #ff8c00; cursor: pointer;">☰</div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 30px; height: 30px; filter: drop-shadow(0 0 5px rgba(255, 140, 0, 0.5));">
+                <path d="M 20 20 L 50 80 L 80 20" fill="none" stroke="#ff8c00" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M 30 20 L 50 70 L 70 20" fill="none" stroke="#ffaa00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M 40 20 L 50 60 L 60 20" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div style="font-size: 18px; font-weight: 900; color: #ffffff; letter-spacing: 1px;">VEYL</div>
+        </div>
+        <div style="width: 35px; height: 35px; border-radius: 50%; border: 1px solid #ff8c00; display: flex; align-items: center; justify-content: center; color: #ff8c00; font-size: 16px; cursor: pointer;">👤</div>
+    </div>
+
+    <!-- منطقة الدردشة -->
+    <div id="chat-box" style="flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px;">
+        <div style="text-align: center; color: #a0a0a0; margin-top: 20px;">
+            <h2 style="color: #ff8c00; margin-bottom: 10px; font-size: 20px;">Welcome to Veyl</h2>
+            <p style="font-size: 14px; line-height: 1.6;">I am here to help you with anything.<br>Type a message below to start.</p>
+        </div>
+    </div>
+
+    <!-- حقل الإدخال -->
+    <div style="padding: 10px 15px; background: #0d0d0d; border-top: 1px solid rgba(255, 140, 0, 0.2); display: flex; gap: 10px; align-items: center; z-index: 10;">
+        <input type="text" id="message-input" placeholder="Type your message here..." style="flex: 1; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 140, 0, 0.3); border-radius: 25px; padding: 12px 18px; color: white; font-family: 'Inter', sans-serif; font-size: 14px; outline: none;">
+        <button id="send-btn" style="width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(100deg, #ff8c00 0%, #ffaa00 100%); border: none; color: #0d0d0d; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(255, 140, 0, 0.3);">➤</button>
+    </div>
+
+    <!-- شريط التنقل السفلي -->
+    <div style="display: flex; justify-content: space-around; padding: 10px 0; background: #0d0d0d; border-top: 1px solid rgba(255, 140, 0, 0.2);">
+        <a href="/" style="text-align: center; color: #ff8c00; font-size: 10px; cursor: pointer; text-decoration: none;"><span style="display: block; font-size: 20px; margin-bottom: 3px;">💬</span>Chat</a>
+        <a href="#" style="text-align: center; color: #666; font-size: 10px; cursor: pointer; text-decoration: none;"><span style="display: block; font-size: 20px; margin-bottom: 3px;">📚</span>Library</a>
+        <a href="/tools" style="text-align: center; color: #666; font-size: 10px; cursor: pointer; text-decoration: none;"><span style="display: block; font-size: 20px; margin-bottom: 3px;">🛠️</span>Tools</a>
+        <a href="#" style="text-align: center; color: #666; font-size: 10px; cursor: pointer; text-decoration: none;"><span style="display: block; font-size: 20px; margin-bottom: 3px;">⚙️</span>Settings</a>
+    </div>
 </div>
+
+<script>
+    const sendBtn = document.getElementById('send-btn');
+    const input = document.getElementById('message-input');
+    const chatBox = document.getElementById('chat-box');
+
+    function addMessage(text, sender) {
+        const msgDiv = document.createElement('div');
+        msgDiv.style.cssText = `max-width: 85%; padding: 12px 16px; border-radius: 15px; font-size: 14px; line-height: 1.5; word-wrap: break-word; align-self: ${sender === 'user' ? 'flex-end' : 'flex-start'}; background: ${sender === 'user' ? 'linear-gradient(100deg, #ff8c00 0%, #ffaa00 100%)' : 'rgba(255, 255, 255, 0.05)'}; color: ${sender === 'user' ? '#0d0d0d' : '#ffffff'}; border-bottom-${sender === 'user' ? 'right' : 'left'}-radius: 4px; border: ${sender === 'user' ? 'none' : '1px solid rgba(255, 140, 0, 0.2)'};`;
+        msgDiv.textContent = text;
+        chatBox.appendChild(msgDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const text = input.value.trim();
+        if (!text) return;
+        
+        const welcome = chatBox.querySelector('div[style*="text-align: center"]');
+        if (welcome) welcome.remove();
+
+        addMessage(text, 'user');
+        input.value = '';
+
+        // ملاحظة: هنا سنضيف الاتصال بـ Flask لاحقاً. حالياً هو مجرد رد تجريبي.
+        setTimeout(() => {
+            addMessage("This is a demo response. Soon I will be connected to Groq AI!", 'bot');
+        }, 1000);
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+</script>
 {% endblock %}
