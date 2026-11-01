@@ -285,9 +285,8 @@
             if (typingEl) typingEl.remove();
             addBotMessage(data.reply);
         } catch (error) {
-            const typingEl = document.getElementById('typing');
-            if (typingEl) typingEl.remove();
-            addBotMessage("Error connecting to AI.");
+            const typingEl = document.getElementById('typing');            if (typingEl) typingEl.remove();
+            addBotMessage("⚠️ عذراً، حدث خطأ في الاتصال بالذكاء الاصطناعي. قد يكون الخادم مشغولاً، يرجى المحاولة بعد قليل.");
         }
     }
 

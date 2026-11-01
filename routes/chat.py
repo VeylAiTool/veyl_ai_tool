@@ -26,22 +26,20 @@ def new_chat():
     db.session.commit()
     return jsonify({"id": conv.id, "title": conv.title})
 
-def call_groq_with_retry(payload, headers, max_retries=3):
-    """دالة لإرسال الطلب مع إعادة المحاولة عند خطأ 429"""
+def call_groq_with_retry(payload, headers, max_retries=5):
+    """دالة محسنة لإرسال الطلب مع إعادة المحاولة عند خطأ 429"""
     for attempt in range(max_retries):
         try:
             response = requests.post(
                 "https://api.groq.com/openai/v1/chat/completions",
                 headers=headers,
                 json=payload,
-                timeout=60
+                timeout=120
             )
             
-            # إذا كان الخطأ 429، انتظر وأعد المحاولة
             if response.status_code == 429:
-                # قراءة الوقت المطلوب للانتظار من الترويسة (إن وجدت)
-                retry_after = int(response.headers.get('retry-after', 5))
-                wait_time = retry_after * (2 ** attempt)  # تأخير متزايد
+                retry_after = int(response.headers.get('retry-after', 10))
+                wait_time = retry_after * (2 ** attempt)
                 print(f"Rate limited. Waiting {wait_time} seconds... (Attempt {attempt+1}/{max_retries})")
                 time.sleep(wait_time)
                 continue
@@ -51,7 +49,7 @@ def call_groq_with_retry(payload, headers, max_retries=3):
             
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 429:
-                retry_after = int(e.response.headers.get('retry-after', 5))
+                retry_after = int(e.response.headers.get('retry-after', 10))
                 wait_time = retry_after * (2 ** attempt)
                 print(f"Rate limited. Waiting {wait_time} seconds...")
                 time.sleep(wait_time)
@@ -62,8 +60,7 @@ def call_groq_with_retry(payload, headers, max_retries=3):
                 raise e
             time.sleep(2 ** attempt)
     
-    # إذا فشلت كل المحاولات
-    return "عذراً، الخادم مشغول حالياً. يرجى المحاولة بعد قليل."
+    return "عذراً، الخادم مشغول جداً حالياً. يرجى المحاولة بعد بضع دقائق."
 
 @chat_bp.route('/api/chat/<int:conv_id>', methods=['POST'])
 @login_required
@@ -96,7 +93,8 @@ def send_message(conv_id):
             {"role": "user", "content": user_message}
         ],
         "temperature": 0.7,
-        "max_completion_tokens": 2048,
+        # إزالة الحد الأقصى لطول الرد (أو رفعه إلى أقصى قيمة يدعمها النموذج)
+        # "max_completion_tokens": 2048,  <-- تم حذف هذا السطر
         "tools": [{"type": "browser_search"}],
         "tool_choice": "auto"
     }
