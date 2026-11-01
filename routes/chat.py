@@ -7,6 +7,10 @@ import os
 
 chat_bp = Blueprint('chat', __name__)
 
+# عنوان Gemini API والنموذج المحدث
+GEMINI_MODEL = "gemini-3.6-flash"
+GEMINI_API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent"
+
 @chat_bp.route('/')
 @login_required
 def index():
@@ -30,7 +34,7 @@ def call_gemini_with_retry(payload, headers, max_retries=3):
     for attempt in range(max_retries):
         try:
             response = requests.post(
-                "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent",
+                GEMINI_API_URL,
                 headers=headers,
                 json=payload,
                 timeout=120
