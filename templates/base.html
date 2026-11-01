@@ -11,7 +11,11 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
-            background: #0d0d0d; 
+            background-color: #0d0d0d; 
+            /* خلفية Doodles تقنية عالمية */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250' viewBox='0 0 250 250'%3E%3Cg stroke='%23ffffff' stroke-width='1.5' fill='none' opacity='0.15'%3E%3C!-- Code --%3E%3Cpolyline points='30,40 20,50 30,60'/%3E%3Cpolyline points='50,40 60,50 50,60'/%3E%3Cline x1='45' y1='35' x2='35' y2='65'/%3E%3C!-- Gear --%3E%3Ccircle cx='200' cy='50' r='12'/%3E%3Ccircle cx='200' cy='50' r='5'/%3E%3Cline x1='200' y1='32' x2='200' y2='38'/%3E%3Cline x1='200' y1='62' x2='200' y2='68'/%3E%3Cline x1='182' y1='50' x2='188' y2='50'/%3E%3Cline x1='212' y1='50' x2='218' y2='50'/%3E%3Cline x1='187' y1='37' x2='192' y2='42'/%3E%3Cline x1='208' y1='58' x2='213' y2='63'/%3E%3Cline x1='187' y1='63' x2='192' y2='58'/%3E%3Cline x1='208' y1='42' x2='213' y2='37'/%3E%3C!-- Robot --%3E%3Crect x='60' y='160' width='40' height='30' rx='6'/%3E%3Ccircle cx='72' cy='175' r='4'/%3E%3Ccircle cx='88' cy='175' r='4'/%3E%3Cline x1='80' y1='160' x2='80' y2='145'/%3E%3Ccircle cx='80' cy='142' r='3'/%3E%3C!-- Chat --%3E%3Cpath d='M160 150 h40 a6 6 0 0 1 6 6 v20 a6 6 0 0 1 -6 6 h-25 l-12 12 v-12 h-3 a6 6 0 0 1 -6 -6 v-20 a6 6 0 0 1 6 -6 z'/%3E%3C!-- Search --%3E%3Ccircle cx='200' cy='200' r='10'/%3E%3Cline x1='207' y1='207' x2='215' y2='215'/%3E%3C/g%3E%3Cg fill='%23ff8c00' opacity='0.4'%3E%3Cpath d='M120 40 l4 12 l12 4 l-12 4 l-4 12 l-4 -12 l-12 -4 l12 -4 z'/%3E%3Cpath d='M40 200 l3 9 l9 3 l-9 3 l-3 9 l-3 -9 l-9 -3 l9 -3 z'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 250px 250px;
             color: #ffffff; 
             font-family: 'Inter', Tahoma, Arial, sans-serif; 
             height: 100vh;
@@ -24,6 +28,7 @@
             display: flex;
             flex-direction: column;
             position: relative;
+            background: rgba(13, 13, 13, 0.85); /* طبقة داكنة شفافة لإظهار الخلفية وقراءة النص */
         }
     </style>
 </head>
