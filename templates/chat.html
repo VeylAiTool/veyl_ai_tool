@@ -2,8 +2,13 @@
 {% block content %}
 <div style="display: flex; flex-direction: column; height: 100%; background: #0d0d0d; width: 100%;">
     
+    <!-- الشريط العلوي بأيقونات حديثة -->
     <div style="height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; background: #0d0d0d; z-index: 10; flex-shrink: 0;">
-        <div style="font-size: 24px; color: #ff8c00; cursor: pointer;">☰</div>
+        <!-- أيقونة القائمة (Hamburger) -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff8c00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor: pointer;">
+            <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
+        </svg>
+
         <div style="display: flex; align-items: center; gap: 8px;">
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 30px; height: 30px; filter: drop-shadow(0 0 5px rgba(255, 140, 0, 0.5));">
                 <path d="M 20 20 L 50 80 L 80 20" fill="none" stroke="#ff8c00" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -12,7 +17,13 @@
             </svg>
             <div style="font-size: 18px; font-weight: 900; color: #ffffff; letter-spacing: 1px;">VEYL</div>
         </div>
-        <a href="{{ url_for('auth.logout') }}" style="width: 35px; height: 35px; border-radius: 50%; border: 1px solid #ff8c00; display: flex; align-items: center; justify-content: center; color: #ff8c00; font-size: 16px; cursor: pointer; text-decoration: none;">👤</a>
+
+        <!-- أيقونة المستخدم الحديثة -->
+        <a href="{{ url_for('auth.logout') }}" style="text-decoration: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff8c00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="cursor: pointer;">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+        </a>
     </div>
 
     <div id="chat-box" style="flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: #0d0d0d;">
@@ -22,32 +33,124 @@
         </div>
     </div>
 
+    <!-- حقل الإدخال -->
     <div style="padding: 10px 15px; background: #0d0d0d; display: flex; gap: 10px; align-items: center; z-index: 10; flex-shrink: 0;">
         <input type="text" id="message-input" placeholder="Type your message here..." style="flex: 1; min-width: 0; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 140, 0, 0.3); border-radius: 25px; padding: 12px 15px; color: white; font-family: 'Inter', sans-serif; font-size: 14px; outline: none;">
-        <button id="send-btn" style="width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(100deg, #ff8c00 0%, #ffaa00 100%); border: none; color: #0d0d0d; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(255, 140, 0, 0.3); flex-shrink: 0;">➤</button>
+        <button id="send-btn" style="width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(100deg, #ff8c00 0%, #ffaa00 100%); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(255, 140, 0, 0.3); flex-shrink: 0;">
+            <!-- أيقونة الإرسال (Send) -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0d0d0d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>
+            </svg>
+        </button>
     </div>
 
+    <!-- شريط التنقل السفلي بأيقونات حديثة -->
     <div style="display: flex; justify-content: space-around; padding: 10px 0; background: #0d0d0d; flex-shrink: 0;">
-        <a href="/" style="text-align: center; color: #ff8c00; font-size: 10px; cursor: pointer; text-decoration: none;"><span style="display: block; font-size: 20px; margin-bottom: 3px;">💬</span>Chat</a>
-        <a href="#" style="text-align: center; color: #666; font-size: 10px; cursor: pointer; text-decoration: none;"><span style="display: block; font-size: 20px; margin-bottom: 3px;">📚</span>Library</a>
-        <a href="/tools" style="text-align: center; color: #666; font-size: 10px; cursor: pointer; text-decoration: none;"><span style="display: block; font-size: 20px; margin-bottom: 3px;">🛠️</span>Tools</a>
-        <a href="#" style="text-align: center; color: #666; font-size: 10px; cursor: pointer; text-decoration: none;"><span style="display: block; font-size: 20px; margin-bottom: 3px;">⚙️</span>Settings</a>
+        <a href="/" style="text-align: center; color: #ff8c00; font-size: 10px; cursor: pointer; text-decoration: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block; margin: 0 auto 3px auto;">
+                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+            </svg>
+            Chat
+        </a>
+        <a href="#" style="text-align: center; color: #666; font-size: 10px; cursor: pointer; text-decoration: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block; margin: 0 auto 3px auto;">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+            </svg>
+            Library
+        </a>
+        <a href="/tools" style="text-align: center; color: #666; font-size: 10px; cursor: pointer; text-decoration: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block; margin: 0 auto 3px auto;">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+            Tools
+        </a>
+        <a href="#" style="text-align: center; color: #666; font-size: 10px; cursor: pointer; text-decoration: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block; margin: 0 auto 3px auto;">
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+            Settings
+        </a>
     </div>
 </div>
 
 <style>
-    .msg-user { max-width: 85%; padding: 12px 16px; border-radius: 15px; font-size: 14px; line-height: 1.6; word-wrap: break-word; white-space: pre-wrap; align-self: flex-end; background: linear-gradient(100deg, #ff8c00 0%, #ffaa00 100%); color: #0d0d0d; border-bottom-right-radius: 4px; direction: auto; }
-    .msg-bot { max-width: 85%; padding: 12px 16px; border-radius: 15px; font-size: 14px; line-height: 1.6; word-wrap: break-word; align-self: flex-start; background: rgba(255, 255, 255, 0.05); color: #ffffff; border-bottom-left-radius: 4px; border: 1px solid rgba(255, 140, 0, 0.1); direction: auto; }
-    .code-block { margin: 12px 0; background: #1a1a1a; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 140, 0, 0.3); direction: ltr; text-align: left; max-width: 100%; }
-    .code-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(255, 140, 0, 0.1); border-bottom: 1px solid rgba(255, 140, 0, 0.2); direction: ltr; }
+    /* إلغاء حدود فقاعة البوت لتأخذ عرض الشاشة */
+    .msg-bot {
+        width: 100%;
+        max-width: 100%;
+        padding: 10px 0;
+        font-size: 14px;
+        line-height: 1.6;
+        word-wrap: break-word;
+        align-self: flex-start;
+        background: transparent;
+        color: #ffffff;
+        border: none;
+        direction: auto;
+    }
+    .msg-user {
+        max-width: 85%;
+        padding: 12px 16px;
+        border-radius: 15px;
+        font-size: 14px;
+        line-height: 1.6;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        align-self: flex-end;
+        background: linear-gradient(100deg, #ff8c00 0%, #ffaa00 100%);
+        color: #0d0d0d;
+        border-bottom-right-radius: 4px;
+        direction: auto;
+    }
+    .code-block {
+        margin: 12px 0;
+        background: #1a1a1a;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 140, 0, 0.3);
+        direction: ltr;
+        text-align: left;
+        max-width: 100%;
+    }
+    .code-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 12px;
+        background: rgba(255, 140, 0, 0.1);
+        border-bottom: 1px solid rgba(255, 140, 0, 0.2);
+        direction: ltr;
+    }
     .code-lang { color: #ff8c00; font-size: 12px; font-weight: 700; text-transform: uppercase; }
     .code-actions { display: flex; gap: 6px; }
-    .code-actions button { background: rgba(255, 140, 0, 0.2); border: 1px solid rgba(255, 140, 0, 0.5); color: #ff8c00; padding: 4px 10px; border-radius: 4px; font-size: 11px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; white-space: nowrap; }
+    .code-actions button {
+        background: rgba(255, 140, 0, 0.2);
+        border: 1px solid rgba(255, 140, 0, 0.5);
+        color: #ff8c00;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        white-space: nowrap;
+    }
     .code-actions button:hover { background: rgba(255, 140, 0, 0.5); color: #fff; }
-    .code-block pre { margin: 0; padding: 12px; overflow-x: auto; color: #e0e0e0; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.5; white-space: pre !important; direction: ltr; text-align: left; }
+    .code-block pre {
+        margin: 0;
+        padding: 12px;
+        overflow-x: auto;
+        color: #e0e0e0;
+        font-family: 'Courier New', monospace;
+        font-size: 13px;
+        line-height: 1.5;
+        white-space: pre !important;
+        direction: ltr;
+        text-align: left;
+    }
     .code-block code { font-family: 'Courier New', monospace; }
     @media (max-width: 400px) {
-        .msg-user, .msg-bot { max-width: 90%; font-size: 13px; padding: 10px 14px; }
+        .msg-user { max-width: 90%; font-size: 13px; padding: 10px 14px; }
         .code-block pre { font-size: 12px; padding: 10px; }
         .code-actions button { padding: 3px 8px; font-size: 10px; }
     }
